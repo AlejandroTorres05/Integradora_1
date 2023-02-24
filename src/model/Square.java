@@ -17,7 +17,6 @@ public class Square {
     public Square getNext() {
         return next;
     }
-
     public void setNext(Square next) {
         this.next = next;
     }
@@ -25,7 +24,6 @@ public class Square {
     public Square getPrevious() {
         return previous;
     }
-
     public void setPrevious(Square previous) {
         this.previous = previous;
     }

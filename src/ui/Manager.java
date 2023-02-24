@@ -12,6 +12,7 @@ public class Manager {
         this.sc = new Scanner(System.in);
         this.controller = new Controller();
     }
+
     public static void main(String[] args) {
 
         Manager manager = new Manager();
@@ -60,9 +61,6 @@ public class Manager {
         System.out.println("How many rows do you want?");
         int rows = sc.nextInt();
         controller.initializeBoard(columns,rows);
-
-        //Este es un llamado a un metodo de prueba para verificar que la inicializacion e impresion funciona
-        System.out.println(controller.print());
 
     }
 }
