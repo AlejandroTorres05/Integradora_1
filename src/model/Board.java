@@ -47,9 +47,8 @@ public class Board {
         if(aRows > rows) {
             return "\n" + showBoard(current, 1, aColumns-1);
         } else {
-            return "[" + current.getNumber() + "]" + showBoard(current.getNext(),aRows+1, aColumns);
+            return "[" + space(current.getNumber()+"", columns*rows) + "] " + showBoard(current.getNext(), aRows + 1, aColumns);
         }
-
     }
 
     private Square searchSquare(Square current, int target) {
@@ -58,6 +57,12 @@ public class Board {
         } else {
             return searchSquare(current.getPrevious(), target);
         }
+    }
+
+    private String space(String n, int ntoCompare){
+        if(String.valueOf(ntoCompare).length() == n.length()) return n;
+
+        return space(n + " ", ntoCompare);
     }
 
 
