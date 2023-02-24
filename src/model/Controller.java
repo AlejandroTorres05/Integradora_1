@@ -19,5 +19,9 @@ public class Controller {
         initializeTheBoard(square,number+1);
     }
 
+    public String showBoard() {
+        return board.showBoard();
+    }
+
 }
 

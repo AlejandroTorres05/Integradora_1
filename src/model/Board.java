@@ -28,9 +28,36 @@ public class Board {
             return;
         }
 
-        last.setNext(square);
         square.setPrevious(last);
-        this.last = square;
+        square.getPrevious().setNext(square);
+        last = square;
+    }
+
+    public String showBoard() {
+        return showBoard(last, 1, columns-1);
+    }
+
+    private String showBoard(Square current, int aRows, int aColumns) {
+        if(aColumns < 0) return "";
+
+        if(aRows == 1) {
+            current = searchSquare(last, (rows*aColumns)+aRows);
+        }
+
+        if(aRows > rows) {
+            return "\n" + showBoard(current, 1, aColumns-1);
+        } else {
+            return "[" + current.getNumber() + "]" + showBoard(current.getNext(),aRows+1, aColumns);
+        }
+
+    }
+
+    private Square searchSquare(Square current, int target) {
+        if (current.getNumber() == target) {
+            return current;
+        } else {
+            return searchSquare(current.getPrevious(), target);
+        }
     }
 
 

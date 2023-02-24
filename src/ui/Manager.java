@@ -51,7 +51,6 @@ public class Manager {
                 System.out.println(option + " is not a valid option");
                 break;
         }
-
     }
 
     public void initializeBoard (){
@@ -63,6 +62,7 @@ public class Manager {
         int rows = sc.nextInt();
 
         controller.initializeBoard(columns,rows);
+        System.out.println(controller.showBoard());
 
     }
 }
