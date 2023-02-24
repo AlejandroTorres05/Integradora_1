@@ -34,18 +34,25 @@ public class Board {
     }
 
     public String showBoard() {
-        return showBoard(last, 1, columns-1);
+        return showBoard(last, 1, columns);
     }
 
     private String showBoard(Square current, int aRows, int aColumns) {
-        if(aColumns < 0) return "";
+        if(aColumns == 0) return "";
 
-        if(aRows == 1) {
-            current = searchSquare(last, (rows*aColumns)+aRows);
+        if(aRows == 1 && (aColumns%2)==0) {
+            current = searchSquare(last,rows*aColumns);
+        }
+        if(aRows == 1 && (aColumns%2)!=0) {
+            current = searchSquare(last, (rows*(aColumns-1))+aRows);
         }
 
-        if(aRows > rows) {
+        if(aRows > rows) { //Agregar espacio
             return "\n" + showBoard(current, 1, aColumns-1);
+        }
+
+        if((aColumns%2)==0){
+            return "[" + space(current.getNumber()+"", columns*rows) + "] " + showBoard(current.getPrevious(), aRows + 1, aColumns);
         } else {
             return "[" + space(current.getNumber()+"", columns*rows) + "] " + showBoard(current.getNext(), aRows + 1, aColumns);
         }
