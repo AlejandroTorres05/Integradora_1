@@ -21,35 +21,35 @@ public class Manager {
     }
 
     public void showMenu (){
+        int option;
 
-        System.out.println("Hello, \nwelcome to Snakes and Ladders. ");
-        boolean start = false;
+        do{
+            System.out.println("""
+                    Hello, Welcome to Snakes and Ladders.
+                    
+                    ¬| Please type the number of an option:
+                    1. Play"
+                    0. Exit"
+                    """);
 
-        while (!start) {
+            option = sc.nextInt();
+            executeMenu(option);
 
-            System.out.println("Please type the number of an option: "
-                + "\n 1. Play"
-                + "\n 0. Exit");
-
-            int option = sc.nextInt();
-            if (executeMenu(option) == 0){
-                start = true;
-            }
-
-        }
+        } while (option != 0);
     }
 
-    public int executeMenu (int option){
+    public void executeMenu (int option){
 
         switch (option){
             case 0:
-                return 0;
+                System.out.println("Clossing menu... GoodBye");
+                break;
             case 1:
                 initializeBoard();
-                return 1;
+                break;
             default:
                 System.out.println(option + " is not a valid option");
-                return -1;
+                break;
         }
 
     }
@@ -58,8 +58,10 @@ public class Manager {
 
         System.out.println("How many columns do you want");
         int columns = sc.nextInt();
+
         System.out.println("How many rows do you want?");
         int rows = sc.nextInt();
+
         controller.initializeBoard(columns,rows);
 
     }
