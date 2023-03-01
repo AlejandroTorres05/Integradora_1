@@ -72,5 +72,8 @@ public class Board {
         return space(n + " ", ntoCompare);
     }
 
+    private boolean initializeSnake (int exit, int start) {
+        return false;
+    }
 
 }

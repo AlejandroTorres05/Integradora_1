@@ -1,4 +1,5 @@
 package model;
+import java.lang.Math;
 
 public class Controller {
 
@@ -17,6 +18,23 @@ public class Controller {
 
         board.addSquare(new Square(number));
         initializeTheBoard(square,number+1);
+    }
+
+    private void initializeSnakes (int number, int i, int maxValue){
+        if (i == number) return;
+        int start = (int)(Math.random()*maxValue+1);
+        int exit = (int)(Math.random()*maxValue+1);
+
+        while (start > exit){
+            start = (int)(Math.random() * maxValue);
+            exit = (int)(Math.random() * maxValue);
+        }
+
+        initializeSnakes(number,i+1, maxValue);
+    }
+
+    private void initializeLadder (int number){
+
     }
 
     public String showBoard() {
