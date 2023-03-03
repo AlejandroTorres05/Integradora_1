@@ -11,6 +11,8 @@ public class Controller {
         board.setColumns(columns);
 
         initializeTheBoard(columns*rows, 1);
+        initializeObstacles(columns-1, 0, columns*rows, 1);
+        initializeObstacles(rows-1, 0, columns*rows, 0);
     }
 
     private void initializeTheBoard (int square, int number) {
@@ -20,21 +22,32 @@ public class Controller {
         initializeTheBoard(square,number+1);
     }
 
-    private void initializeSnakes (int number, int i, int maxValue){
+    private void initializeObstacles (int number, int i, int maxValue, int option){
         if (i == number) return;
-        int start = (int)(Math.random()*maxValue+1);
-        int exit = (int)(Math.random()*maxValue+1);
+        int start = (int)(Math.random()*maxValue);
+        int exit = (int)(Math.random()*maxValue);
 
-        while (start > exit){
-            start = (int)(Math.random() * maxValue);
-            exit = (int)(Math.random() * maxValue);
+        if (option == 1){
+            while (start < exit){
+                start = (int)(Math.random() * maxValue);
+                exit = (int)(Math.random() * maxValue);
+            }
+            if (!board.initializeObstacle(exit, start, 1)){
+                initializeObstacles(number,i, maxValue, 1);
+            } else {
+                initializeObstacles(number,i+1, maxValue, 1);
+            }
+        } else {
+            while (start > exit){
+                start = (int)(Math.random() * maxValue);
+                exit = (int)(Math.random() * maxValue);
+            }
+            if (!board.initializeObstacle(exit, start, 0)){
+                initializeObstacles(number,i, maxValue, 0);
+            } else {
+                initializeObstacles(number,i+1, maxValue, 0);
+            }
         }
-
-        initializeSnakes(number,i+1, maxValue);
-    }
-
-    private void initializeLadder (int number){
-
     }
 
     public String showBoard() {

@@ -24,13 +24,11 @@ public class Manager {
         int option;
 
         do{
-            System.out.println("""
-                    Hello, Welcome to Snakes and Ladders.
-                    
-                    ¬| Please type the number of an option:
-                    1. Play"
-                    0. Exit"
-                    """);
+            System.out.println("Hello, Welcome to Snakes and Ladders."
+                    +"\n"
+                    +"\n¬| Please type the number of an option:"
+                    +"\n1. Play"
+                    +"\n0. Exit" );
 
             option = sc.nextInt();
             executeMenu(option);
@@ -42,7 +40,7 @@ public class Manager {
 
         switch (option){
             case 0:
-                System.out.println("Clossing menu... GoodBye");
+                System.out.println("Closing menu... GoodBye");
                 break;
             case 1:
                 initializeBoard();

@@ -72,8 +72,45 @@ public class Board {
         return space(n + " ", ntoCompare);
     }
 
-    private boolean initializeSnake (int exit, int start) {
-        return false;
+    public boolean initializeObstacle (int exit, int start, int option) {
+        if (!verifyObstacle(start, exit, last)) return false;
+        if (option == 1){
+            Snake head = new Snake(start);
+            Snake tail = new Snake(exit);
+            head.setExit(tail);
+            tail.setEntrance(head);
+            changeSquare(last, head);
+            changeSquare(last, tail);
+        }else {
+            Ladder head = new Ladder(start);
+            Ladder tail = new Ladder(exit);
+            head.setExit(tail);
+            tail.setEntrance(head);
+            changeSquare(last, head);
+            changeSquare(last, tail);
+        }
+        return true;
+    }
+
+    private void changeSquare (Square current, Square newNode){
+
+        if (current.getNumber() == newNode.getNumber()){
+            current.getNext().setPrevious(newNode);
+            current.getPrevious().setNext(newNode);
+        } else {
+            changeSquare(current.getPrevious(), newNode);
+        }
+    }
+
+    private boolean verifyObstacle (int start, int exit, Square current){
+        if (current == null) return true;
+        if (current.getNumber() == start || current.getNumber() == exit){
+            if (current instanceof Snake || current instanceof Ladder){
+                return false;
+            }
+        }
+        return verifyObstacle(start, exit, current.getPrevious());
     }
 
 }
+
