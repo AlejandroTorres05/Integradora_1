@@ -25,13 +25,20 @@ public class Controller {
         int obstacle1 = 0;
         int obstacle2 = 0;
 
+        boolean check = true;
+
+        // Medida Temporal en caso de que el tablerro se pase de la cantidad de letras
+        if (snakeNumber > board.alphabet.length) snakeNumber = board.alphabet.length;
+
         if (snakeNumber > 0) {
             do {
                 // [0, n-1) +1 asi se evita que sea 0 y que sea n
                 obstacle1 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 1;
                 obstacle2 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 1;
 
-            } while (obstacle1 > obstacle2 && board.checkObstaclePosition(obstacle1, obstacle2));
+
+
+            } while (!(obstacle1 < obstacle2) || board.checkObstaclePosition(obstacle1, obstacle2) || !(obstacle2 - obstacle1 >= 2));
 
             board.generateSnakes(obstacle1, obstacle2, n);
             initializeObstacles(snakeNumber-1, ladderNumber, n+1);
@@ -43,7 +50,9 @@ public class Controller {
                 obstacle1 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 2;
                 obstacle2 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 2;
 
-            } while (obstacle1 > obstacle2 && board.checkObstaclePosition(obstacle1, obstacle2));
+                check = board.checkObstaclePosition(obstacle1, obstacle2);
+
+            } while (!(obstacle1 < obstacle2) || board.checkObstaclePosition(obstacle1, obstacle2) || !(obstacle2 - obstacle1 >= 2));
 
             board.generateLadders(obstacle1, obstacle2, n);
             initializeObstacles(snakeNumber, ladderNumber-1, n+1);

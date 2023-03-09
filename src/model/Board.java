@@ -117,16 +117,21 @@ public class Board {
 
             // Caso cola de serpiente = 1
             // Caso escalera en final
-            if (current.getPrevious() != null) current.getPrevious().setNext(newSquare);
-            if (current.getNext() != null) current.getNext().setPrevious(newSquare);
+            if (current.getPrevious() != null) {
+                current.getPrevious().setNext(newSquare);
+            }
+            if (current.getNext() != null) {
+                current.getNext().setPrevious(newSquare);
+            }
+
         } else {
             changeSquare(current.getPrevious(), newSquare);
         }
     }
 
     public void generateSnakes(int snake1, int snake2, int n) {
-        Snake snake1_Obj = new Snake(snake1, alphabet[n]);
-        Snake snake2_Obj = new Snake(snake2, alphabet[n]);
+        Snake snake1_Obj = new Snake(snake1, alphabet[n-1]);
+        Snake snake2_Obj = new Snake(snake2, alphabet[n-1]);
 
         snake2_Obj.setTail(searchSquare(snake1));
 
