@@ -1,5 +1,4 @@
 package model;
-import java.lang.Math;
 
 public class Controller {
 
@@ -11,8 +10,8 @@ public class Controller {
         board.setColumns(columns);
 
         initializeTheBoard(columns*rows, 1);
-        initializeObstacles(columns-1, 0, columns*rows, 1);
-        initializeObstacles(rows-1, 0, columns*rows, 0);
+        initializeObstacles(board.getColumns()-1, 0, 1);
+        initializeObstacles(0, board.getRows()-1, 1);
     }
 
     private void initializeTheBoard (int square, int number) {
@@ -22,36 +21,42 @@ public class Controller {
         initializeTheBoard(square,number+1);
     }
 
-    private void initializeObstacles (int number, int i, int maxValue, int option){
-        if (i == number) return;
-        int start = (int)(Math.random()*maxValue);
-        int exit = (int)(Math.random()*maxValue);
+    public void initializeObstacles(int snakeNumber, int ladderNumber, int n) {
+        int obstacle1 = 0;
+        int obstacle2 = 0;
 
-        if (option == 1){
-            while (start < exit){
-                start = (int)(Math.random() * maxValue);
-                exit = (int)(Math.random() * maxValue);
-            }
-            if (!board.initializeObstacle(exit, start, 1)){
-                initializeObstacles(number,i, maxValue, 1);
-            } else {
-                initializeObstacles(number,i+1, maxValue, 1);
-            }
-        } else {
-            while (start > exit){
-                start = (int)(Math.random() * maxValue);
-                exit = (int)(Math.random() * maxValue);
-            }
-            if (!board.initializeObstacle(exit, start, 0)){
-                initializeObstacles(number,i, maxValue, 0);
-            } else {
-                initializeObstacles(number,i+1, maxValue, 0);
-            }
+        if (snakeNumber > 0) {
+            do {
+                // [0, n-1) +1 asi se evita que sea 0 y que sea n
+                obstacle1 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 1;
+                obstacle2 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 1;
+
+            } while (obstacle1 > obstacle2 && board.checkObstaclePosition(obstacle1, obstacle2));
+
+            board.generateSnakes(obstacle1, obstacle2, n);
+            initializeObstacles(snakeNumber-1, ladderNumber, n+1);
         }
+
+        if (ladderNumber > 0) {
+            do {
+                // [0, n-1) +2 asi se evita que sea 0 y 1
+                obstacle1 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 2;
+                obstacle2 = (int)(Math.random() * (board.getRows() * board.getColumns())-1) + 2;
+
+            } while (obstacle1 > obstacle2 && board.checkObstaclePosition(obstacle1, obstacle2));
+
+            board.generateLadders(obstacle1, obstacle2, n);
+            initializeObstacles(snakeNumber, ladderNumber-1, n+1);
+        }
+
     }
 
-    public String showBoard() {
-        return board.showBoard();
+    public String showBoardSquares() {
+        return board.showBoardSquares();
+    }
+
+    public String showBoardObstacles() {
+        return board.showBoardObstacles();
     }
 
 }

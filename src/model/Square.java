@@ -2,7 +2,7 @@ package model;
 
 public class Square {
 
-    private int number;
+    private final int number;
     private Square next;
     private Square previous;
 

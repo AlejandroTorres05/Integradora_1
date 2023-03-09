@@ -2,27 +2,23 @@ package model;
 
 public class Snake extends Square{
 
-    private Square exit;
-    private Square entrance;
+    private final String name;
+    private Square tail;
 
-    public Snake(int number) {
+    public Snake(int number, String name) {
         super(number);
+        this.name = name;
     }
 
-    public Square getExit() {
-        return exit;
+    public String getName() {
+        return name;
     }
 
-    public void setExit(Square exit) {
-        this.exit = exit;
+    public Square getTail() {
+        return tail;
     }
-
-    public Square getEntrance() {
-        return entrance;
-    }
-
-    public void setEntrance(Square entrance) {
-        this.entrance = entrance;
+    public void setTail(Square tail) {
+        this.tail = tail;
     }
 }
 

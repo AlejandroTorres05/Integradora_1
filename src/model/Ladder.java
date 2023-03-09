@@ -2,26 +2,22 @@ package model;
 
 public class Ladder extends Square{
 
-    private Square exit;
-    private Square entrance;
+    private final String name;
+    private Square ladderLanding;
 
-    public Ladder(int number) {
+    public Ladder(int number, String name) {
         super(number);
+        this.name = name;
     }
 
-    public Square getExit() {
-        return exit;
+    public String getName() {
+        return name;
     }
 
-    public void setExit(Square exit) {
-        this.exit = exit;
+    public Square getLadderLanding() {
+        return ladderLanding;
     }
-
-    public Square getEntrance() {
-        return entrance;
-    }
-
-    public void setEntrance(Square entrance) {
-        this.entrance = entrance;
+    public void setLadderLanding(Square ladderLanding) {
+        this.ladderLanding = ladderLanding;
     }
 }
