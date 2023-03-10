@@ -4,14 +4,18 @@ public class Controller {
 
     private Board board;
 
+    private PlayerRank rank;
+
     public void initializeBoard (int columns, int rows) {
         board = new Board();
         board.setRows(rows);
         board.setColumns(columns);
+        rank = new PlayerRank();
 
         initializeTheBoard(columns*rows, 1);
         initializeObstacles(board.getColumns()-1, 0, 1);
         initializeObstacles(0, board.getRows()-1, 1);
+        initializePlayers();
     }
 
     private void initializeTheBoard (int square, int number) {
@@ -66,6 +70,48 @@ public class Controller {
 
     public String showBoardObstacles() {
         return board.showBoardObstacles();
+    }
+
+    private void initializePlayers (){
+
+        int []  players = new int[3];
+        boolean test = false;
+
+        while (!test){
+
+            players[0] = (int)(Math.random() * 7);
+            players[1] = (int)(Math.random() * 7);
+            players[2] = (int)(Math.random() * 7);
+
+            if ( players[0] != players[1] && players[1] != players[2]
+                    && players[2] != players[0]){
+
+                board.initializePlayers(players, 0);
+                test = true;
+            }
+        }
+    }
+
+    public char currentPlayer (int turn){
+        return board.currentPlayer(turn);
+    }
+
+    public int movePlayer (int turn){
+
+        int throwDice = (int)(Math.random()*7);
+        if (board.movePlayer(turn, throwDice)){
+            return -1;
+        }else {
+            return throwDice;
+        }
+    }
+
+    public void stopGame (){
+        rank.add(new Node(board.getLast().getPlayer()));
+    }
+
+    public String printRank (){
+        return rank.printRank();
     }
 
 }

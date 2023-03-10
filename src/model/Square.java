@@ -3,11 +3,15 @@ package model;
 public class Square {
 
     private final int number;
+
+    private Player[] players;
     private Square next;
     private Square previous;
 
     public Square(int number) {
+
         this.number = number;
+        this.players = new Player[3];
     }
 
     public int getNumber() {
@@ -26,5 +30,70 @@ public class Square {
     }
     public void setPrevious(Square previous) {
         this.previous = previous;
+    }
+
+    public boolean addPlayer (Player player){
+
+        for (int i = 0; i<players.length; i++){
+            if (players[i] !=  null){
+                if (players[i].equals(player)) return false;
+            }
+        }
+
+        for (int i = 0; i<players.length; i++){
+            if (players[i] == null) {
+                players[i] = player;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean validatePlayer(Player player){
+
+        for (int i = 0; i<players.length; i++){
+            if (players[i] != null){
+                if (players[i].equals(player)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean deletePlayer (Player player){
+
+        for (int i = 0; i<players.length; i++){
+
+            if (players[i] != null){
+
+                if (players[i].equals(player)){
+                    players[i] = null;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Player getPlayer (){
+        for (int i = 0; i< players.length; i++){
+            if (players[i] != null){
+                return players[i];
+            }
+        }
+        return null;
+    }
+
+    public String printPlayers (){
+        String message = "";
+
+        for (int i = 0; i<players.length; i++){
+            if (players[i] != null){
+                message += players[i].getId();
+            }
+        }
+
+        return message;
     }
 }

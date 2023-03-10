@@ -17,6 +17,7 @@ public class Manager {
 
         Manager manager = new Manager();
         manager.showMenu();
+        manager.printRank();
 
     }
 
@@ -24,13 +25,10 @@ public class Manager {
         int option;
 
         do{
-            System.out.println("""
-                    Hello, Welcome to Snakes and Ladders.
-                    
-                    ¬| Please type the number of an option:
-                    1. Play"
-                    0. Exit"
-                    """);
+            System.out.println("Hello, Welcome to Snakes and Ladders."
+                    + "\n¬| Please type the number of an option:"
+                    + "\n1. Play"
+                    + "\n0. Exit");
 
             option = sc.nextInt();
             executeMenu(option);
@@ -42,10 +40,12 @@ public class Manager {
 
         switch (option){
             case 0:
-                System.out.println("Clossing menu... GoodBye");
+                System.out.println("Closing menu... GoodBye");
                 break;
             case 1:
                 initializeBoard();
+                movePlayers();
+                controller.stopGame();
                 break;
             default:
                 System.out.println(option + " is not a valid option");
@@ -66,4 +66,53 @@ public class Manager {
         System.out.println(controller.showBoardObstacles());
 
     }
+
+    public void movePlayers () {
+
+        int turn = 0;
+        int option;
+        char currentPlayer;
+        boolean run = false;
+
+        while (!run){
+
+            currentPlayer = controller.currentPlayer(turn);
+            System.out.println("Player " + currentPlayer + ", please type an option:"
+                + "\n1. throw dice"
+                + "\n2. Show ladders and snakes");
+
+            option = sc.nextInt();
+
+            switch (option){
+                case 1:
+                    int movement = controller.movePlayer(turn);
+                    if (movement == -1){
+                        System.out.println("You have won this round player " + currentPlayer);
+                        run = true;
+                    }else {
+                        System.out.println("Your throw was " + movement);
+                        controller.showBoardSquares();
+                        turn ++;
+                    }
+                    break;
+                case 2:
+                    controller.showBoardObstacles();
+                    turn ++;
+                    break;
+                default:
+                    System.out.println(option + " is not an option");
+                    break;
+            }
+
+            if (turn == 3) turn = 0;
+        }
+
+    }
+
+    public void printRank (){
+        System.out.println("Here is the final Rank");
+        System.out.println(controller.printRank());
+        System.out.println("Good bay...");
+    }
+
 }

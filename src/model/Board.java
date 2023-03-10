@@ -10,9 +10,13 @@ public class Board {
     };
 
     private Square last;
-
+    private Player [] players;
     private int columns;
     private int rows;
+
+    public Board (){
+        this.players = new Player[3];
+    }
 
     public Square getLast() {
         return last;
@@ -183,4 +187,75 @@ public class Board {
         }
     }
 
+    public void initializePlayers (int [] players, int i) {
+
+        if (i == players.length) {
+            addPlayersToStart(0);
+            return;
+        }
+        this.players[i] = new Player(players[i]);
+        initializePlayers(players, i+1);
+
+    }
+
+    private void addPlayersToStart (int i){
+
+        if (i == players.length) return;
+        searchSquare(1).addPlayer(players[i]);
+        addPlayersToStart(i+1);
+    }
+
+    public char currentPlayer (int turn){
+        return players[turn].getId();
+    }
+
+    public boolean movePlayer (int turn, int moves){
+
+        Square current = validatePlayer(players[turn], last);
+        return movePlayer(current, players[turn], moves, 1);
+    }
+
+    private boolean movePlayer (Square currentSquare, Player player, int moves, int currentMove){
+        if (currentMove > moves){
+
+            if (currentSquare == null){
+                return true;
+            }else {
+                if (currentSquare.getPrevious() instanceof Snake && (Snake)((Snake) currentSquare.getPrevious()).getTail() != null){
+                    movedBySnake(player, (Snake) currentSquare.getPrevious());
+                }
+                if (currentSquare.getPrevious() instanceof Ladder && (Ladder) ((Ladder) currentSquare.getPrevious()).getLadderLanding() != null){
+                    movedByLadder(player, (Ladder) currentSquare.getPrevious());
+                }
+                return false;
+            }
+
+        }
+        currentSquare.deletePlayer(player);
+        currentSquare.getNext().addPlayer(player);
+        return movePlayer(currentSquare.getNext(), player, moves, currentMove+1);
+    }
+
+    private Square validatePlayer (Player player, Square current){
+
+        if (current.validatePlayer(player)) return current;
+        return validatePlayer(player, current.getPrevious());
+    }
+
+
+    private void movedBySnake (Player player, Snake snake){
+        snake.deletePlayer(player);
+        snake.getTail().addPlayer(player);
+    }
+
+    private void movedByLadder (Player player, Ladder ladder){
+        ladder.deletePlayer(player);
+        ladder.getLadderLanding().addPlayer(player);
+    }
+
+    public Player getPlayerOfLevel () {
+        return last.getPlayer();
+    }
+
 }
+
