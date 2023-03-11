@@ -67,9 +67,9 @@ public class Board {
         }
 
         if((aColumns%2)==0){
-            return "[" + space(current.getNumber()+"", columns*rows) + "] " + showBoardSquares(current.getPrevious(), aRows + 1, aColumns);
+            return "[" + space(current.getNumber()+current.printPlayers(), columns*rows) + "] " + showBoardSquares(current.getPrevious(), aRows + 1, aColumns);
         } else {
-            return "[" + space(current.getNumber()+"", columns*rows) + "] " + showBoardSquares(current.getNext(), aRows + 1, aColumns);
+            return "[" + space(current.getNumber()+current.printPlayers(), columns*rows) + "] " + showBoardSquares(current.getNext(), aRows + 1, aColumns);
         }
     }
 
@@ -86,7 +86,7 @@ public class Board {
     }
 
     private String space(String n, int ntoCompare){
-        if(String.valueOf(ntoCompare).length() == n.length()) return n;
+        if(String.valueOf(ntoCompare).length() <= n.length()) return n;
 
         return space(n + " ", ntoCompare);
     }
