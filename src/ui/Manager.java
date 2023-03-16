@@ -45,7 +45,7 @@ public class Manager {
             case 1:
                 initializeBoard();
                 movePlayers();
-                controller.stopGame();
+
                 break;
             default:
                 System.out.println(option + " is not a valid option");
@@ -85,25 +85,24 @@ public class Manager {
 
             switch (option){
                 case 1:
+
                     int movement = controller.movePlayer(turn);
-                    if (movement == -1){
-                        System.out.println("You have won this round player " + currentPlayer);
-                        run = true;
-                    }else {
-                        System.out.println("Your throw was " + movement);
-                        controller.showBoardSquares();
-                        turn ++;
-                    }
+                    System.out.println("Your throw was " + movement);
+                    System.out.println(controller.showBoardSquares());
+                    System.out.println(controller.showBoardObstacles());
+
                     break;
                 case 2:
-                    controller.showBoardObstacles();
-                    turn ++;
+                    System.out.println(controller.showBoardObstacles());
                     break;
                 default:
-                    System.out.println(option + " is not an option");
+                    System.out.println(option + " is not an option"
+                        + "\nYou have loused you turn");
                     break;
             }
 
+            if (controller.isInTheEnd()) run = true;
+            turn ++;
             if (turn == 3) turn = 0;
         }
 

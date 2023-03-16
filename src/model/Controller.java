@@ -98,16 +98,18 @@ public class Controller {
 
     public int movePlayer (int turn){
 
-        int throwDice = (int)(Math.random()*7);
-        if (board.movePlayer(turn, throwDice)){
-            return -1;
-        }else {
-            return throwDice;
-        }
+        int throwDice = (int)(Math.random()*6+1);
+        board.movePlayer(turn, throwDice);
+        return throwDice;
     }
 
-    public void stopGame (){
-        rank.add(new Node(board.getLast().getPlayer()));
+    public boolean isInTheEnd (){
+
+        Player winner = board.isPlayerInTheEnd();
+        if (winner == null) return false;
+        rank.add(new Node(winner));
+        return true;
+
     }
 
     public String printRank (){

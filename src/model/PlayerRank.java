@@ -31,15 +31,18 @@ public class PlayerRank {
 
     public String printRank(){
 
-        return printRank(root, "", 1);
+        return printRank(root, 1);
     }
 
-    private String printRank(Node current, String message, int top){
+    private String printRank(Node current, int top){
         if(current == null){
-            return message;
+            return "";
         }
-        printRank(current.getRight(), message, top+1);
+
+        String message = "";
+        message += printRank(current.getRight(), top+1);
         message += top + ". " + current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
-        return message + printRank(current.getLeft(), message, top+1);
+        message += printRank(current.getLeft(), top+2);
+        return message;
     }
 }

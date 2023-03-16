@@ -209,31 +209,43 @@ public class Board {
         return players[turn].getId();
     }
 
-    public boolean movePlayer (int turn, int moves){
+    public void movePlayer (int turn, int moves){
 
         Square current = validatePlayer(players[turn], last);
-        return movePlayer(current, players[turn], moves, 1);
+        movePlayer(current, players[turn], moves, 0);
     }
 
-    private boolean movePlayer (Square currentSquare, Player player, int moves, int currentMove){
-        if (currentMove > moves){
+    private void movePlayer (Square currentSquare, Player player, int moves, int currentMove){
 
-            if (currentSquare == null){
-                return true;
-            }else {
-                if (currentSquare.getPrevious() instanceof Snake && (Snake)((Snake) currentSquare.getPrevious()).getTail() != null){
-                    movedBySnake(player, (Snake) currentSquare.getPrevious());
-                }
-                if (currentSquare.getPrevious() instanceof Ladder && (Ladder) ((Ladder) currentSquare.getPrevious()).getLadderLanding() != null){
-                    movedByLadder(player, (Ladder) currentSquare.getPrevious());
-                }
-                return false;
-            }
-
-        }
+        if (currentSquare.equals(last)) return;
         currentSquare.deletePlayer(player);
         currentSquare.getNext().addPlayer(player);
-        return movePlayer(currentSquare.getNext(), player, moves, currentMove+1);
+
+        if (currentMove == moves-1){
+
+            if (currentSquare instanceof Snake ){
+                if ( ((Snake) currentSquare).getTail() != null ){
+                    System.out.println("Is in a snake");
+                    movedBySnake(player, (Snake) currentSquare);
+                }
+            }
+            if (currentSquare instanceof Ladder){
+                if (((Ladder) currentSquare).getLadderLanding() != null){
+                    movedByLadder(player, currentSquare);
+                }
+            }
+            return;
+        }
+        movePlayer(currentSquare.getNext(), player, moves, currentMove+1);
+    }
+
+    public Player isPlayerInTheEnd (){
+        if (last.getPlayer() != null){
+            return last.getPlayer();
+        }
+        else {
+            return null;
+        }
     }
 
     private Square validatePlayer (Player player, Square current){
@@ -248,9 +260,10 @@ public class Board {
         snake.getTail().addPlayer(player);
     }
 
-    private void movedByLadder (Player player, Ladder ladder){
+    private void movedByLadder (Player player, Square ladder){
+        System.out.println("Is in a ladder");
         ladder.deletePlayer(player);
-        ladder.getLadderLanding().addPlayer(player);
+        ((Ladder)ladder).getLadderLanding().addPlayer(player);
     }
 
     public Player getPlayerOfLevel () {
