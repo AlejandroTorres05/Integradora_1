@@ -137,20 +137,22 @@ public class Board {
         Snake snake1_Obj = new Snake(snake1, alphabet[n-1]);
         Snake snake2_Obj = new Snake(snake2, alphabet[n-1]);
 
-        snake2_Obj.setTail(searchSquare(snake1));
-
         changeSquare(snake1_Obj);
         changeSquare(snake2_Obj);
+
+        ((Snake) searchSquare(snake2)).setTail(searchSquare(snake1));
+        //snake2_Obj.setTail(searchSquare(snake1));
     }
 
     public void generateLadders(int ladder1, int ladder2, int n) {
         Ladder ladder1_Obj = new Ladder(ladder1, n+"");
         Ladder ladder2_Obj = new Ladder(ladder2, n+"");
 
-        ladder1_Obj.setLadderLanding(searchSquare(ladder1));
-
         changeSquare(ladder1_Obj);
         changeSquare(ladder2_Obj);
+
+        ((Ladder) searchSquare(ladder1)).setLadderLanding(searchSquare(ladder2));
+        //ladder1_Obj.setLadderLanding(searchSquare(ladder1));
     }
 
     public String showBoardObstacles() {
@@ -209,33 +211,37 @@ public class Board {
         return players[turn].getId();
     }
 
+    // turn = el jugador que esta jugando
+    // moves = el numero del dado
     public void movePlayer (int turn, int moves){
 
         Square current = validatePlayer(players[turn], last);
         movePlayer(current, players[turn], moves, 0);
     }
+    //Current square_1 la casilla donde esta ubicado el jugador
 
     private void movePlayer (Square currentSquare, Player player, int moves, int currentMove){
 
         if (currentSquare.equals(last)) return;
-        currentSquare.deletePlayer(player);
-        currentSquare.getNext().addPlayer(player);
 
-        if (currentMove == moves-1){
+        if (currentMove == moves){
 
             if (currentSquare instanceof Snake ){
                 if ( ((Snake) currentSquare).getTail() != null ){
-                    System.out.println("Is in a snake");
                     movedBySnake(player, (Snake) currentSquare);
                 }
             }
             if (currentSquare instanceof Ladder){
                 if (((Ladder) currentSquare).getLadderLanding() != null){
-                    movedByLadder(player, currentSquare);
+                    movedByLadder(player, (Ladder) currentSquare);
                 }
             }
             return;
         }
+
+        currentSquare.deletePlayer(player);
+        currentSquare.getNext().addPlayer(player);
+
         movePlayer(currentSquare.getNext(), player, moves, currentMove+1);
     }
 
@@ -260,10 +266,9 @@ public class Board {
         snake.getTail().addPlayer(player);
     }
 
-    private void movedByLadder (Player player, Square ladder){
-        System.out.println("Is in a ladder");
+    private void movedByLadder (Player player, Ladder ladder){
         ladder.deletePlayer(player);
-        ((Ladder)ladder).getLadderLanding().addPlayer(player);
+        ladder.getLadderLanding().addPlayer(player);
     }
 
     public Player getPlayerOfLevel () {

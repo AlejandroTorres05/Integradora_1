@@ -16,6 +16,7 @@ public class Manager {
     public static void main(String[] args) {
 
         Manager manager = new Manager();
+
         manager.showMenu();
         manager.printRank();
 

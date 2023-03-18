@@ -32,22 +32,14 @@ public class Square {
         this.previous = previous;
     }
 
-    public boolean addPlayer (Player player){
-
-        for (int i = 0; i<players.length; i++){
-            if (players[i] !=  null){
-                if (players[i].equals(player)) return false;
-            }
-        }
+    public void addPlayer (Player player){
 
         for (int i = 0; i<players.length; i++){
             if (players[i] == null) {
                 players[i] = player;
-                return true;
+                return;
             }
         }
-
-        return false;
     }
 
     public boolean validatePlayer(Player player){
@@ -61,7 +53,7 @@ public class Square {
         return false;
     }
 
-    public boolean deletePlayer (Player player){
+    public void deletePlayer (Player player){
 
         for (int i = 0; i<players.length; i++){
 
@@ -69,11 +61,10 @@ public class Square {
 
                 if (players[i].equals(player)){
                     players[i] = null;
-                    return true;
+                    return;
                 }
             }
         }
-        return false;
     }
 
     public Player getPlayer (){

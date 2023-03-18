@@ -2,7 +2,7 @@ package model;
 
 public class Player {
 
-    private final char [] identifications = { '!', 'O', 'X', '%', '$', '#', '+', '&'};
+    private final char [] identifications = { '!', 'X', '%', '$', '#', '+', '&'};
 
     private int score;
     private char id;
