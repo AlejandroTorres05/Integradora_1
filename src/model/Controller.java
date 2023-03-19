@@ -79,9 +79,9 @@ public class Controller {
 
         while (!test){
 
-            players[0] = (int)(Math.random() * 7);
-            players[1] = (int)(Math.random() * 7);
-            players[2] = (int)(Math.random() * 7);
+            players[0] = (int)(Math.random() * 6 + 1);
+            players[1] = (int)(Math.random() * 6 + 1);
+            players[2] = (int)(Math.random() * 6 + 1);
 
             if ( players[0] != players[1] && players[1] != players[2]
                     && players[2] != players[0]){
@@ -107,6 +107,9 @@ public class Controller {
 
         Player winner = board.isPlayerInTheEnd();
         if (winner == null) return false;
+        long seconds = System.currentTimeMillis() - board.getTimeOfStart();
+        seconds /= 1000;
+        winner.setScore((600 - seconds)/6);
         rank.add(new Node(winner));
         return true;
 

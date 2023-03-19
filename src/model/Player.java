@@ -4,7 +4,7 @@ public class Player {
 
     private final char [] identifications = { '!', 'X', '%', '$', '#', '+', '&'};
 
-    private int score;
+    private long score;
     private char id;
 
     public Player(int id) {
@@ -12,11 +12,11 @@ public class Player {
         this.score = 0;
     }
 
-    public int getScore() {
+    public long getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(long score) {
         this.score = score;
     }
 

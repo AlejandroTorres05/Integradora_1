@@ -9,6 +9,8 @@ public class Board {
             "V", "W", "X", "Y", "Z"
     };
 
+    private long timeOfStart;
+
     private Square last;
     private Player [] players;
     private int columns;
@@ -16,6 +18,7 @@ public class Board {
 
     public Board (){
         this.players = new Player[3];
+        this.timeOfStart = System.currentTimeMillis();
     }
 
     public Square getLast() {
@@ -34,6 +37,10 @@ public class Board {
     }
     public void setRows(int rows) {
         this.rows = rows;
+    }
+
+    public long getTimeOfStart() {
+        return timeOfStart;
     }
 
     public void addSquare (Square square){
@@ -222,6 +229,11 @@ public class Board {
 
     private void movePlayer (Square currentSquare, Player player, int moves, int currentMove){
 
+        if ( currentSquare == null) {
+            last.addPlayer(player);
+            return;
+        }
+
         if (currentSquare.equals(last)) return;
 
         if (currentMove == moves){
@@ -256,6 +268,7 @@ public class Board {
 
     private Square validatePlayer (Player player, Square current){
 
+        if (current == null) return null;
         if (current.validatePlayer(player)) return current;
         return validatePlayer(player, current.getPrevious());
     }

@@ -64,7 +64,6 @@ public class Manager {
 
         controller.initializeBoard(columns,rows);
         System.out.println(controller.showBoardSquares());
-        System.out.println(controller.showBoardObstacles());
 
     }
 
@@ -90,20 +89,17 @@ public class Manager {
                     int movement = controller.movePlayer(turn);
                     System.out.println("Your throw was " + movement);
                     System.out.println(controller.showBoardSquares());
-                    System.out.println(controller.showBoardObstacles());
-
+                    turn ++;
                     break;
                 case 2:
                     System.out.println(controller.showBoardObstacles());
                     break;
                 default:
-                    System.out.println(option + " is not an option"
-                        + "\nYou have loused you turn");
+                    System.out.println(option + " is not an option");
                     break;
             }
 
             if (controller.isInTheEnd()) run = true;
-            turn ++;
             if (turn == 3) turn = 0;
         }
 
