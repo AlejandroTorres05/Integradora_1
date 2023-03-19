@@ -17,6 +17,7 @@ public class Manager {
 
         Manager manager = new Manager();
 
+        System.out.println("Hello, Welcome to Snakes and Ladders.");
         manager.showMenu();
         manager.printRank();
 
@@ -26,8 +27,7 @@ public class Manager {
         int option;
 
         do{
-            System.out.println("Hello, Welcome to Snakes and Ladders."
-                    + "\n¬| Please type the number of an option:"
+            System.out.println("¬| Please type the number of an option:"
                     + "\n1. Play"
                     + "\n0. Exit");
 
@@ -41,7 +41,7 @@ public class Manager {
 
         switch (option){
             case 0:
-                System.out.println("Closing menu... GoodBye");
+                System.out.println("Closing menu...");
                 break;
             case 1:
                 initializeBoard();

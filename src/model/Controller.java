@@ -6,11 +6,14 @@ public class Controller {
 
     private PlayerRank rank;
 
+    public Controller (){
+        this.rank = new PlayerRank();
+    }
+
     public void initializeBoard (int columns, int rows) {
         board = new Board();
         board.setRows(rows);
         board.setColumns(columns);
-        rank = new PlayerRank();
 
         initializeTheBoard(columns*rows, 1);
         initializeObstacles(board.getColumns()-1, 0, 1);
@@ -31,7 +34,6 @@ public class Controller {
 
         boolean check = true;
 
-        // Medida Temporal en caso de que el tablerro se pase de la cantidad de letras
         if (snakeNumber > board.alphabet.length) snakeNumber = board.alphabet.length;
 
         if (snakeNumber > 0) {
@@ -110,13 +112,13 @@ public class Controller {
         long seconds = System.currentTimeMillis() - board.getTimeOfStart();
         seconds /= 1000;
         winner.setScore((600 - seconds)/6);
-        rank.add(new Node(winner));
+        this.rank.add(new Node(winner));
         return true;
 
     }
 
     public String printRank (){
-        return rank.printRank();
+        return this.rank.printRank();
     }
 
 }

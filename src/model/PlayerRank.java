@@ -11,8 +11,6 @@ public class PlayerRank {
             return;
         }
         add(root, node);
-        //Este printLine es para hacer las pruebas del metodo de agregar
-        System.out.println(root.getData().getId());
     }
     private void add(Node current, Node node){
 
@@ -22,28 +20,30 @@ public class PlayerRank {
             }else{
                 add(current.getLeft(), node);
             }
+            System.out.println("I'm capturing something");
         }else if(node.getData().getScore() > current.getData().getScore()){
             if(current.getRight() == null){
                 current.setRight(node);
             }else{
                 add(current.getRight(), node);
             }
+            System.out.println("I'm capturing something");
         }
     }
 
     public String printRank(){
 
-        return printRank(root);
+        return printRank(root, "");
     }
 
-    private String printRank(Node current){
+    private String printRank(Node current, String message){
         if(current == null){
             return "";
         }
 
-        String left = printRank(current.getRight());
-        String value = current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
-        String right = printRank(current.getLeft());
-        return left + value + right;
+        printRank(current.getRight(), message);
+        message = current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
+        printRank(current.getLeft(), message);
+        return message;
     }
 }
