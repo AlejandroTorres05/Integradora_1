@@ -15,35 +15,37 @@ public class PlayerRank {
     private void add(Node current, Node node){
 
         if(node.getData().getScore() < current.getData().getScore()){
+            System.out.println("I'm capturing something");
             if(current.getLeft() == null){
                 current.setLeft(node);
             }else{
                 add(current.getLeft(), node);
             }
-            System.out.println("I'm capturing something");
         }else if(node.getData().getScore() > current.getData().getScore()){
+            System.out.println("I'm capturing something");
             if(current.getRight() == null){
                 current.setRight(node);
             }else{
                 add(current.getRight(), node);
             }
-            System.out.println("I'm capturing something");
         }
     }
 
     public String printRank(){
 
-        return printRank(root, "");
+        return printRank(root);
     }
 
-    private String printRank(Node current, String message){
+    private String printRank(Node current){
         if(current == null){
             return "";
         }
+        String message = "";
 
-        printRank(current.getRight(), message);
+        message += printRank(current.getRight());
         message = current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
-        printRank(current.getLeft(), message);
+        message += printRank(current.getLeft());
+
         return message;
     }
 }
