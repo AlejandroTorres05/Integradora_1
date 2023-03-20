@@ -12,17 +12,23 @@ public class PlayerRank {
         }
         add(root, node);
     }
+
+    /*
+    * Si estas probando el proyecto completo de forma rapida, debes dar tiempo cada vez que vayas
+    * a terminar un recirrido. Porque el ranking debia se un BST, asi que si terminas una ronda muy
+    * rapido, no se va a guardar la informacion del nuevo porque en nuestra estructura de datos no se contempla
+    * el hecho de que haya keys iguales. 
+    * */
+
     private void add(Node current, Node node){
 
         if(node.getData().getScore() < current.getData().getScore()){
-            System.out.println("I'm capturing something");
             if(current.getLeft() == null){
                 current.setLeft(node);
             }else{
                 add(current.getLeft(), node);
             }
         }else if(node.getData().getScore() > current.getData().getScore()){
-            System.out.println("I'm capturing something");
             if(current.getRight() == null){
                 current.setRight(node);
             }else{
@@ -43,7 +49,7 @@ public class PlayerRank {
         String message = "";
 
         message += printRank(current.getRight());
-        message = current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
+        message += current.getData().getId() + " with " + current.getData().getScore() +  " points" + "\n";
         message += printRank(current.getLeft());
 
         return message;
